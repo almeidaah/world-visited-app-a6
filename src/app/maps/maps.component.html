@@ -1,0 +1,35 @@
+<div class="container-fluid bg">
+      <form class="form-inline justify-content-center" #form="ngForm">
+        <div class="form-group">
+          <input type="text" class="form-control" name="latitude" [(ngModel)]="latitude" placeholder="Latitude" required>
+          <input type="text" class="form-control" name="longitude" [(ngModel)]="longitude" placeholder="Longitude" required>
+          <button type="button" (click)="setCenter()" class="btn btn-primary" [disabled]="form.invalid">Procurar</button>
+      </div>
+      </form>
+
+   <!-- <div class="col-md-6 col-sm-12 col-xs-12">
+      <label>Select Marker: </label>
+      <select [(ngModel)]="selectedMarkerType" name="category">
+        <option *ngFor="let marker of markerTypes" [value]="marker.value">{{marker.text}}</option>
+      </select>
+      <button type="button" (click)="showCustomMarker()" class="btn btn-primary" [disabled]="form.invalid"> Custom Marker</button>
+    </div> -->
+  <br>
+  <div class="row" >
+    <div class="col-md-12 text-center">
+          <div id="gmapRow" #gmap style="width:100%;height:750px" ></div>
+    </div>
+  </div>
+
+  <div class="row">
+      <div class="col-md-12">
+          <div class="text-center">
+              <button (click)="setMapType('terrain')" class="btn btn-primary">Terrain</button>
+              <button (click)="setMapType('satellite')" class="btn btn-danger">Satellite</button>
+              <button (click)="setMapType('roadmap')" class="btn btn-warning">Road Map</button>
+              <button type="button" (click)="toggleMap()" class="btn btn-primary">Toggle Map</button>
+            </div>
+      </div>
+  </div>
+
+</div>
