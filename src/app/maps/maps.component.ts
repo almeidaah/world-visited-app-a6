@@ -27,14 +27,6 @@ export class MapsComponent implements OnInit {
   
   iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
 
-  markerTypes = [
-    {text: "Parking", value: "parking_lot_maps.png"},
-    {text: "Library", value: "library_maps.png"},
-    {text: "Information", value: "info-i_maps.png"}
-  ];
-
-  selectedMarkerType: string = "parking_lot_maps.png";
-
   ngOnInit() {
     this.loadUserLocations();
   }
@@ -101,7 +93,6 @@ export class MapsComponent implements OnInit {
       center: {lat: -27.5973, lng: -48.5499},
       zoom: 12
     });
-    //this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);
    
     google.maps.event.addListener(this.map, "click", (e) => {
       let markerPosition = {
@@ -114,29 +105,14 @@ export class MapsComponent implements OnInit {
 
   }
 
-  //Change map style(terrain/satellite/roadmap)
+  //Change map view style(terrain/satellite/roadmap)
   setMapType(mapTypeId: string) {
     this.map.setMapTypeId(mapTypeId)
   }
-
-  
-
-   showCustomMarker() {
-
-     this.map.setCenter(new google.maps.LatLng(this.latitude, this.longitude));
-     let location = new google.maps.LatLng(this.latitude, this.longitude);
-
-     let marker = new google.maps.Marker({
-       position: location,
-       map: this.map,
-       icon: this.iconBase + this.selectedMarkerType
-     });
-   }
 
   toggleMap() {
     this.isHidden = !this.isHidden;
     this.gmapElement.nativeElement.hidden = this.isHidden;
   }
-
  
 }
