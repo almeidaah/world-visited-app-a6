@@ -1,15 +1,18 @@
 <div class="container-fluid bg">
-      <form class="form-inline justify-content-center" #form="ngForm">
+    <form class="form-inline justify-content-center" #form="ngForm">
         <div class="form-group">
           <input type="text" class="form-control" name="latitude" [(ngModel)]="latitude" placeholder="Latitude" required>
           <input type="text" class="form-control" name="longitude" [(ngModel)]="longitude" placeholder="Longitude" required>
           <button type="button" (click)="setCenter()" class="btn btn-primary" [disabled]="form.invalid">Procurar</button>
+          <button type="button" (click)="setCenter()" class="btn btn-danger offset-sm-6" [routerLink]="['/login']">Logout</button>
+
       </div>
-      </form>
+    </form>
+    <br />
 
   <div class="row" >
     <div class="col-md-12 text-center">
-          <div id="gmapRow" #gmap style="width:100%;height:750px" ></div>
+          <div id="gmapRow" #gmap style="width:100%;height:800px" ></div>
     </div>
   </div>
 
@@ -23,5 +26,4 @@
             </div>
       </div>
   </div>
-
 </div>

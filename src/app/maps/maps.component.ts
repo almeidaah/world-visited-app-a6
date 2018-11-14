@@ -16,7 +16,8 @@ export class MapsComponent implements OnInit {
 
   constructor(private http: HttpClient) {}
 
-  private _markersURL = 'assets/markers.json';
+  //private _markersURL = 'assets/markers.json';
+  private _markersURL = 'http://localhost:8080/users/5bec25ecf3212b50fc68e563';
   private _markers: any;
   private latitude: any;
   private longitude: any;
@@ -37,14 +38,14 @@ export class MapsComponent implements OnInit {
 
   loadUserLocations(){
       this.getJSON().subscribe(result => {
-        result.markers.forEach(
-          marker => this.setUserPosition(marker.position, marker.visitInfo)
+        result.markerList.forEach(
+          marker => this.setUserPosition({latitude : marker.latitude, longitude: marker.longitude }, marker.content)
         );
         this._markers = result.markers;
     });
   }
 
-  setUserPosition(pos, visitInfo){
+  setUserPosition(pos, content){
     let location = new google.maps.LatLng(pos.latitude, pos.longitude);
 
     let marker = new google.maps.Marker({
@@ -52,7 +53,7 @@ export class MapsComponent implements OnInit {
       animation: google.maps.Animation.DROP,
       position: location
     });
-    this.addInfoWindow(marker, visitInfo.content);
+    this.addInfoWindow(marker, content);
   }
 
   setCenter() {

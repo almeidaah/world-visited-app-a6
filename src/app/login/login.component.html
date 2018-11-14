@@ -2,8 +2,8 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-6 offset-sm-3">
-                <h2>Login</h2>
                 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                    <img src="assets/home-logo.png" class="img-fluid max-width: 100%;" alt="World visited app home logo...">
                     <div class="form-group">
                         <label for="username">Username</label>
                         <input type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
