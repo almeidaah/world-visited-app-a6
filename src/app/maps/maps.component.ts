@@ -6,6 +6,9 @@ import { Observable } from 'rxjs';
 
 import { } from 'googlemaps';
 
+import { MarkerService, AlertService } from '../_services';
+import { first } from 'rxjs/operators';
+
 @Component({
   selector: 'app-maps',
   templateUrl: './maps.component.html',
@@ -14,10 +17,13 @@ import { } from 'googlemaps';
 @Injectable()
 export class MapsComponent implements OnInit {
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,
+              private markerService: MarkerService,
+              private alertService: AlertService) {}
 
   //private _markersURL = 'assets/markers.json';
-  private _markersURL = 'http://localhost:8080/users/5bec25ecf3212b50fc68e563';
+  private _markersURL = 'http://localhost:8080/users/5bf6b281f3212b5d49f877a8';
+  
   private _markers: any;
   private latitude: any;
   private longitude: any;
@@ -39,21 +45,10 @@ export class MapsComponent implements OnInit {
   loadUserLocations(){
       this.getJSON().subscribe(result => {
         result.markerList.forEach(
-          marker => this.setUserPosition({latitude : marker.latitude, longitude: marker.longitude }, marker.content)
+          marker => this.putMarkerOnMap({latitude : marker.latitude, longitude: marker.longitude }, marker.content)
         );
         this._markers = result.markers;
     });
-  }
-
-  setUserPosition(pos, content){
-    let location = new google.maps.LatLng(pos.latitude, pos.longitude);
-
-    let marker = new google.maps.Marker({
-      map: this.map,
-      animation: google.maps.Animation.DROP,
-      position: location
-    });
-    this.addInfoWindow(marker, content);
   }
 
   setCenter() {
@@ -62,11 +57,6 @@ export class MapsComponent implements OnInit {
       position: {latitude : this.latitude, longitude : this.longitude},
       visitInfo: {content: "conteudo pesquisado"}
     };
-
-    this.setUserPosition(item.position, item.visitInfo);
- 
-     //Add to memory markers
-     this._markers.push(item);
    }
 
   addInfoWindow(marker, content){
@@ -101,9 +91,36 @@ export class MapsComponent implements OnInit {
         "longitude" : e.latLng.lng()
       }
       let visitInfo = { content : "Clicado" }
-      this.setUserPosition(markerPosition, visitInfo);
+      this.saveMarker(markerPosition, visitInfo);
     });
+  }
 
+  saveMarker(pos,visitInfo){
+    const dbMarker = {
+      latitude : pos.latitude,
+      longitude : pos.longitude,
+      content : visitInfo.content
+    }; 
+
+    this.markerService.register(dbMarker)
+    .pipe(first()) 
+        .subscribe(
+          data => {
+              this.putMarkerOnMap(pos, dbMarker.content);
+              this.alertService.success('Success adding marker', true);
+          },
+          err => {
+              this.alertService.error(err.error);
+          });
+  }
+
+  putMarkerOnMap(pos, visitInfo){
+    let marker = new google.maps.Marker({
+      map: this.map,
+      animation: google.maps.Animation.DROP,
+      position: new google.maps.LatLng(pos.latitude, pos.longitude)
+    });
+    this.addInfoWindow(marker, visitInfo);
   }
 
   //Change map view style(terrain/satellite/roadmap)

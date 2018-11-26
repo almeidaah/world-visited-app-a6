@@ -13,7 +13,7 @@ import { RouterModule } from '@angular/router';
 import { RegisterComponent } from './register/register.component';
 
 //helper components
-import { AlertService, AuthenticationService, UserService } from './_services';
+import { AlertService, AuthenticationService, UserService , MarkerService } from './_services';
 
 @NgModule({
   declarations: [
@@ -32,7 +32,8 @@ import { AlertService, AuthenticationService, UserService } from './_services';
   providers: [ 
     AlertService,
     AuthenticationService,
-    UserService 
+    UserService,
+    MarkerService
   ],
   bootstrap: [AppComponent]
 })
