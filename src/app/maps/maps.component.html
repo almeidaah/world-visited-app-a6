@@ -1,11 +1,11 @@
 <div class="container-fluid bg">
     <form class="form-inline justify-content-center" #form="ngForm">
         <div class="form-group">
+          <button type="button" (click)="setCurrentLocation()" class="btn btn-link maps-button-image maps-button"></button>
           <input type="text" class="form-control" name="latitude" [(ngModel)]="latitude" placeholder="Latitude" required>
           <input type="text" class="form-control" name="longitude" [(ngModel)]="longitude" placeholder="Longitude" required>
           <button type="button" (click)="setCenter()" class="btn btn-primary" [disabled]="form.invalid">Procurar</button>
-          <button type="button" (click)="setCenter()" class="btn btn-danger offset-sm-6" [routerLink]="['/login']">Logout</button>
-
+          <button type="button" class="btn btn-danger offset-sm-6" [routerLink]="['/login']">Logout</button>
       </div>
     </form>
     <br />

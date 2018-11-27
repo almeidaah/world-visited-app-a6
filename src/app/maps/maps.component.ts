@@ -3,7 +3,6 @@ import { ViewChild } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'; 
 import { Observable } from 'rxjs';
-
 import { } from 'googlemaps';
 
 import { MarkerService, AlertService } from '../_services';
@@ -59,6 +58,12 @@ export class MapsComponent implements OnInit {
     };
    }
 
+   setCurrentLocation(){
+    navigator.geolocation.getCurrentPosition((position) => {
+      this.map.setCenter(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
+    });
+   }
+
   addInfoWindow(marker, content){
     let infoWindow = new google.maps.InfoWindow({
       content: content
@@ -69,22 +74,11 @@ export class MapsComponent implements OnInit {
   }
 
   ngAfterContentInit() {
-    
-    navigator.geolocation.getCurrentPosition(function(position) {
-      let options = {
-        center: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
-        zoom: 10,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-      }
-      console.log(options.center);
-    })
-    
-    // Renderiza map e define eventos default
+
     this.map = new google.maps.Map(this.gmapElement.nativeElement, {
-      center: {lat: -27.5973, lng: -48.5499},
       zoom: 12
     });
-   
+
     google.maps.event.addListener(this.map, "click", (e) => {
       let markerPosition = {
         "latitude" : e.latLng.lat(),
@@ -93,6 +87,8 @@ export class MapsComponent implements OnInit {
       let visitInfo = { content : "Clicado" }
       this.saveMarker(markerPosition, visitInfo);
     });
+
+    this.setCurrentLocation();
   }
 
   saveMarker(pos,visitInfo){
