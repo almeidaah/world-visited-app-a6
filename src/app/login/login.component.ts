@@ -49,10 +49,11 @@ export class LoginComponent implements OnInit {
         .pipe(first())
             .subscribe(
                 data => {
+                    debugger;
                     this.router.navigate(['/maps'/*this.returnUrl*/]);
                 },
                 error => {
-                    this.alertService.error(error);
+                    this.alertService.error('Problem at login.');
                     this.loading = false;
                 });
     }

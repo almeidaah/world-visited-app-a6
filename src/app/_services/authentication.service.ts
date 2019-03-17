@@ -1,12 +1,15 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
 
 @Injectable()
 export class AuthenticationService {
     constructor(private http: HttpClient) { }
 
-    login(username: string, password: string) {
-        return this.http.post<any>('http://localhost:8080/login', { username: username, password: password })
+    login(username: string, password: string): Observable<HttpResponse<any>> {
+        return this.http.post<HttpResponse<any>>('http://localhost:8080/login', { username: username, password: password },
+        {observe: 'response'})
     }
 
     logout() {
