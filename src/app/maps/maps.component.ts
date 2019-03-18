@@ -20,13 +20,12 @@ export class MapsComponent implements OnInit {
               private markerService: MarkerService,
               private alertService: AlertService) {}
 
-  //private _markersURL = 'assets/markers.json';
   private _markersURL = 'http://localhost:8080/users/5bf6b281f3212b5d49f877a8';
   
-  private _markers: any;
   private latitude: any;
   private longitude: any;
   private isHidden = false;
+  private placesCount: any;
 
   @ViewChild('gmap') gmapElement: any;
   map: google.maps.Map;
@@ -43,20 +42,16 @@ export class MapsComponent implements OnInit {
 
   loadUserLocations(){
       this.getJSON().subscribe(result => {
+        this.placesCount = result.markerList.length;
         result.markerList.forEach(
           marker => this.putMarkerOnMap({latitude : marker.latitude, longitude: marker.longitude }, marker.content)
         );
-        this._markers = result.markers;
     });
   }
 
   setCenter() {
     this.map.setCenter(new google.maps.LatLng(this.latitude, this.longitude));
-    let item = {
-      position: {latitude : this.latitude, longitude : this.longitude},
-      visitInfo: {content: "conteudo pesquisado"}
-    };
-   }
+  }
 
    setCurrentLocation(){
     navigator.geolocation.getCurrentPosition((position) => {
@@ -84,13 +79,30 @@ export class MapsComponent implements OnInit {
         "latitude" : e.latLng.lat(),
         "longitude" : e.latLng.lng()
       }
-      let visitInfo = { content : "Clicado" }
+      let visitDate = this.formatDate(new Date());
+      let visitInfo = { content : visitDate }
       this.saveMarker(markerPosition, visitInfo);
+      this.placesCount++;
     });
 
     this.setCurrentLocation();
   }
 
+  formatDate(date) {
+    var monthNames = [
+      "January", "February", "March",
+      "April", "May", "June", "July",
+      "August", "September", "October",
+      "November", "December"
+    ];
+  
+    var day = date.getDate();
+    var monthIndex = date.getMonth();
+    var year = date.getFullYear();
+  
+    return day + ' ' + monthNames[monthIndex] + ' ' + year;
+  }
+  
   saveMarker(pos,visitInfo){
     const dbMarker = {
       latitude : pos.latitude,

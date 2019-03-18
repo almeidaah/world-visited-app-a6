@@ -6,24 +6,27 @@
           <input type="text" class="form-control" name="longitude" [(ngModel)]="longitude" placeholder="Longitude" required>
           <button type="button" (click)="setCenter()" class="btn btn-primary" [disabled]="form.invalid">Procurar</button>
           <button type="button" class="btn btn-danger offset-sm-6" [routerLink]="['/login']">Logout</button>
-      </div>
-    </form>
-    <br />
-
-  <div class="row" >
-    <div class="col-md-12 text-center">
-          <div id="gmapRow" #gmap style="width:100%;height:800px" ></div>
-    </div>
-  </div>
-
-  <div class="row">
-      <div class="col-md-12">
           <div class="text-center">
-              <button (click)="setMapType('terrain')" class="btn btn-primary">Terrain</button>
-              <button (click)="setMapType('satellite')" class="btn btn-danger">Satellite</button>
-              <button (click)="setMapType('roadmap')" class="btn btn-warning">Road Map</button>
-              <button type="button" (click)="toggleMap()" class="btn btn-primary">Toggle Map</button>
+              <span class="ml-5"> Você já visitou <h3 class="d-inline text-primary">{{placesCount}}</h3> lugares</span>
             </div>
       </div>
-  </div>
+    </form>
+  
+        <div class="col-md-12">
+            <div class="text-center">
+                <button (click)="setMapType('terrain')" class="btn btn-primary">Terrain</button>
+                <button (click)="setMapType('satellite')" class="btn btn-danger">Satellite</button>
+                <button (click)="setMapType('roadmap')" class="btn btn-warning">Road Map</button>
+                <button type="button" (click)="toggleMap()" class="btn btn-primary">Toggle Map</button>
+              </div>
+        </div>
+
+    <br />
+
+    
+    <div class="row" >
+          <div id="gmapRow" #gmap style="width:100%;height:750px" ></div>
+    </div>
+
+  
 </div>
