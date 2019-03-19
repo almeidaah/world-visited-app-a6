@@ -23,10 +23,10 @@ export class MapsComponent implements OnInit {
 
   private _markersURL = 'https://wvapp-user-registration.herokuapp.com/users/5be4321ef3212b2274d55e62';
   
-  private latitude: any;
-  private longitude: any;
-  private isHidden = false;
-  private placesCount: any;
+   latitude: any;
+   longitude: any;
+   isHidden = false;
+   placesCount: any;
 
   @ViewChild('gmap') gmapElement: any;
   map: google.maps.Map;
