@@ -20,7 +20,7 @@ export class MapsComponent implements OnInit {
               private markerService: MarkerService,
               private alertService: AlertService) {}
 
-  private _markersURL = 'http://localhost:8080/users/5bf6b281f3212b5d49f877a8';
+  private _markersURL = 'https://wvapp-user-registration.herokuapp.com/users/5be4321ef3212b2274d55e62';
   
   private latitude: any;
   private longitude: any;

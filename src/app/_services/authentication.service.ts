@@ -8,7 +8,7 @@ export class AuthenticationService {
     constructor(private http: HttpClient) { }
 
     login(username: string, password: string): Observable<HttpResponse<any>> {
-        return this.http.post<HttpResponse<any>>('http://localhost:8080/login', { username: username, password: password },
+        return this.http.post<HttpResponse<any>>('https://wvapp-user-registration.herokuapp.com/login', { username: username, password: password },
         {observe: 'response'})
     }
 

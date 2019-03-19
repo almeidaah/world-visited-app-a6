@@ -8,7 +8,7 @@ export class UserService {
     constructor(private http: HttpClient) { }
 
     getAll() {
-         return this.http.get<User[]>(`http://localhost:8080/users`);
+         return this.http.get<User[]>(`https://wvapp-user-registration.herokuapp.com/users`);
         //return this.http.get<User[]>(`${config.apiUrl}/users`);
     }
 
@@ -17,7 +17,7 @@ export class UserService {
     }
 
     register(user: User) {
-        return this.http.post(`http://localhost:8080/users/sign-up`, user);
+        return this.http.post(`https://wvapp-user-registration.herokuapp.com/users/sign-up`, user);
         // return this.http.post(`${config.apiUrl}/users/register`, user);
     }
 
